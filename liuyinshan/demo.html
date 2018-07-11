@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="../demo/js/jquery.min.js"></script>
+	<body style="text-align: center;">
+		<p>选择要打印的房屋</p>
+		<form id="form1">
+			
+		</form>
+		<p id="p1"></p>
+	</body>
+	<script>
+		/*$.post('data/data.json',function(data){
+			$.each(data, function(i,n) {
+				var id = n.id;
+				$("#form1").html("<input id='"+id+"' type='checkbox'/>"+n.name);
+				if(n.isPrinted='0'){
+					
+				}
+			});
+		},'json')*/
+		$.ajax({
+			type:"get",
+			url:"data/data.json",
+			async:true,
+			success:function(data){
+				$.each(data, function(i,n) {
+//					alert(n.isPrinted);
+					var id = n.id;
+					$("#form1").append("<input id='"+id+"' type='checkbox'/>"+n.name+"<br />");
+					if(n.isPrinted=="0"){
+//						alert(n.name);
+						if(n.isChecked=="1"){
+							$("#"+id+"").prop("checked",true);
+						}else{
+							$("#"+id+"").prop("checked",false);
+						}
+					}else{
+						$("#"+id+"").prop("checked",false);
+						$("#"+id+"").attr("disabled", true);
+					}
+					var val = 0;
+					val = i+1;
+					$("#p1").html("总房屋数："+val+"个")
+				});
+			}
+		});
+	</script>
+</html>

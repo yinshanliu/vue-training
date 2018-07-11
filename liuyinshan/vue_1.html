@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vue_1</title>
+	</head>
+	<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+	<script src="js/vue.js"></script>
+
+	<body>
+		<div id="app">
+			{{message}}<br /> {{message.split('').reverse().join('')}}
+			<br />
+			<input v-model="message" /><br>
+			<span v-once>这个将不会改变: {{ message}}</span><br /> {{100+100}}
+		</div>
+		<hr />
+		<div id="app2">
+			<p>这将解析为普通文本：{{htmlText}}</p>
+			<p>这将解析为html：<span v-html="htmlText"></span></p>
+		</div>
+		<hr />
+		<div id="app3">
+			{{fullName}}<br />
+			<h1 v-show="false">nkasbk</h1> firstName :<input type="text" v-model="firstName" /><br /> lastName :<input type="text" v-model="lastName" />
+		</div>
+		<hr />
+		<div id="app4">
+			<ul>
+				<li v-for="value in person">
+					{{value}}
+				</li>
+			</ul>
+			<div v-for="(value,key,index) in person">
+				{{index}}.{{key}}:{{value}}
+			</div>
+		</div>
+		<hr />
+		<div id="app5">
+			<li v-for="n in evenNumbers">{{ n }}</li>
+			<span v-for="n in 10">{{n}} </span>
+		</div>
+		<hr />
+		<div id="app6">
+			<button v-on:click="count+=1">加1</button>
+			<p>按钮已经被点击了{{count}}次</p>
+			<button @click.ctrl.exact="count+=1">仅按住Ctrl点击鼠标触发</button>
+			<button @click.right="count+=1">点击鼠标右键触发</button>
+			<button @click.middle="count+=1">点击鼠标中间滑轮触发</button>
+		</div>
+		<hr />
+		<div id="app7">
+			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+			<label for="jack">Jack</label>
+			<input type="checkbox" id="john" value="John" v-model="checkedNames">
+			<label for="john">John</label>
+			<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+			<label for="mike">Mike</label>
+			<br>
+			<span>Checked names: {{ checkedNames }}</span>
+		</div>
+		<hr />
+		<div id="app8">
+			<input type="radio" id="one" value="One" v-model="picked">
+			<label for="one">One</label>
+			<br>
+			<input type="radio" id="two" value="Two" v-model="picked">
+			<label for="two">Two</label>
+			<br>
+			<span>Picked: {{ picked }}</span>
+		</div>
+		<hr />
+		<div id="app9">
+			<select v-model="selected">
+				<option disabled value="">请选择</option>
+				<option>A</option>
+				<option>B</option>
+				<option>C</option>
+			</select>
+			<span>Selected: {{ selected }}</span>
+		</div>
+		<hr />
+		<div id="components-demo">
+			<button-counter></button-counter>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'hello world'
+			}
+		})
+		var app2 = new Vue({
+			el: '#app2',
+			data: {
+				htmlText: "<span style='color:red'>显示为红色<span>"
+			}
+		})
+		var app3 = new Vue({
+			el: '#app3',
+			data: {
+				firstName: 'Foo',
+				lastName: 'Bar',
+				fullName: 'Foo Bar'
+			},
+			//数据侦听器
+			watch: {
+				firstName: function(val) {
+					this.fullName = val + ' ' + this.lastName
+				},
+				lastName: function(val) {
+					this.fullName = this.firstName + ' ' + val
+				}
+			}
+			/*computed: {
+				fullName: function() {
+					return this.firstName + ' ' + this.lastName
+				}
+			}*/
+		})
+		var app4 = new Vue({
+			el: "#app4",
+			data: {
+				person: {
+					id: 1,
+					name: 'zhangsan',
+					age: 22
+
+				}
+			}
+		})
+		var app5 = new Vue({
+			el: "#app5",
+			data: {
+				numbers: [1, 2, 3, 4, 5]
+			},
+			computed: {
+				evenNumbers: function() {
+					//过滤器 	
+					return this.numbers.filter(function(number) {
+						return number % 2 === 0
+					})
+				}
+			}
+		})
+		//v-on指令监听DOM事件
+		var app6 = new Vue({
+			el: "#app6",
+			data: {
+				count: 0
+			}
+		})
+		//表单输入绑定（复选框）
+		var app7 = new Vue({
+			el: "#app7",
+			data: {
+				checkedNames: []
+			}
+		})
+		//表单输入绑定（单选按钮）
+		var app8 = new Vue({
+			el: "#app8",
+			data: {
+				picked: ''
+			}
+		})
+		//表单输入绑定（下拉列表框）
+		var app9 = new Vue({
+			el: "#app9",
+			data: {
+				selected: ''
+			}
+		})
+		// 定义一个名为 button-counter 的新组件
+		Vue.component('button-counter', {
+			data: function() {
+				return {
+					count: 0
+				}
+			},
+			template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+		})
+		new Vue({
+			el: '#components-demo'
+		})
+	</script>
+
+</html>

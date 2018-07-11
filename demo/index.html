@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>table 表头-表列固定</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="data-table">
+    <div class="t_l">
+        <table>
+            <tbody>
+                <tr style="height:135px;width:100px;">
+                    <th>机构</th>
+                </tr>
+            </tbody>
+        </table>
+        <div class="t_l_freeze">
+            <table>
+                <tr>
+                    <td>全辖合计</td>
+                </tr>
+                <tr>
+                    <td>本部合计</td>
+                </tr>
+                <tr>
+                    <td>二级分行合计</td>
+                </tr>
+                <tr>
+                    <td>淄博分行</td>
+                </tr>
+                <tr>
+                    <td>济宁分行</td>
+                </tr>
+                <tr>
+                    <td>滨州分行</td>
+                </tr>
+                <tr>
+                    <td>东营分行</td>
+                </tr>
+                <tr>
+                    <td>临沂分行</td>
+                </tr>
+                <tr>
+                    <td>济南账务中心</td>
+                </tr>
+                <tr>
+                    <td>济南现金中心</td>
+                </tr>
+                <tr>
+                    <td>济南营业部</td>
+                </tr>
+                <tr>
+                    <td>济南市中支行</td>
+                </tr>
+                <tr>
+                    <td>济南历下支行</td>
+                </tr>
+                <tr>
+                    <td>济南槐荫支行</td>
+                </tr>
+                <tr>
+                    <td>济南天桥支行</td>
+                </tr>
+                <tr>
+                    <td>济南经十路支行</td>
+                </tr>
+                <tr>
+                    <td>济南舜耕支行</td>
+                </tr>
+                <tr>
+                    <td>济南解放路支行</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="t_r">
+        <div class="t_r_t">
+            <table>
+                <tbody>
+                <tr>
+                    <th colspan="10">自营存款</th>
+                    <th colspan="4">其中对公存款</th>
+                    <th colspan="3">个人存款</th>
+                    <th colspan="6">一般个人存款</th>
+                    <th colspan="6">其中核心对公存款</th>
+                </tr>
+                <tr>
+                    <th colspan="4">时点情况</th>
+                    <th colspan="3">月日均</th>
+                    <th colspan="3">年日均</th>
+                    <th colspan="4">时点情况</th>
+                    <th colspan="3">时点情况</th>
+                    <th colspan="3">月日均</th>
+                    <th colspan="3">年日均</th>
+                    <th colspan="3">月日均</th>
+                    <th colspan="3">年日均</th>
+                </tr>
+                <tr>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>较同期</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>较同期</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                    <th>余额</th>
+                    <th>较上日</th>
+                    <th>较年初</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="t_r_content">
+            <table>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/iscroll-probe.min.js"></script>
+<style>
+    body .data-table .t_r table {
+        width: 2175px;
+    }
+    table {
+        table-layout: fixed;
+    }
+    th, td {
+        width: 75px !important;
+    }
+    th[colspan] {
+        width: auto !important;
+    }
+</style>
+<script type="text/javascript">
+    for (var i=0; i< 20; i++) {
+        $('.t_r_content table tbody').append('<tr><td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td>'
+            + '<td>222.32</td></tr>');
+    }
+</script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

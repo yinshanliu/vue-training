@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vue_3 组件</title>
+	</head>
+	<script src="js/vue.js"></script>
+
+	<body>
+		<div id="app">
+			<blog-post title="第一条数据"></blog-post>
+			<!--<blog-post title="第二条数据"></blog-post>
+			<blog-post title="第三条数据"></blog-post>
+			<blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>-->
+		</div>
+	</body>
+	<script>
+		//声明一个全局组件
+		Vue.component('blog-post', {
+			props: ['title'],
+			template: '<h2>{{title}}</h2>'
+		})
+		var app = new Vue({
+			el: "#app",
+			data: {
+				posts: [{
+						id: 1,
+						title: 'My journey with Vue'
+					},
+					{
+						id: 2,
+						title: 'Blogging with Vue'
+					},
+					{
+						id: 3,
+						title: 'Why Vue is so fun'
+					}
+				]
+			}
+		})
+	</script>
+
+</html>
