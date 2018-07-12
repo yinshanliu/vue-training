@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>双向绑定-复选框</title>
+	</head>
+	<script src="js/vue.js"></script>
+	<style>
+		div {
+			width: 500px;
+			padding: 20px;
+			border: 4px solid #ebcbbe;
+		}
+		
+		input {
+			margin: 10px 5px;
+		}
+	</style>
+
+	<body>
+		<div id="app">
+			<input type="checkbox" id="apple" value="apple" v-model="checkedNames"> <label for="apple">apple</label>
+			<input type="checkbox" id="orange" value="orange" v-model="checkedNames"> <label for="orange">orange</label>
+			<input type="checkbox" id="banana" value="banana" v-model="checkedNames"> <label for="banana">banana</label>
+			<input type="checkbox" id="watermelon" value="watermelon" v-model="checkedNames"> <label for="watermelon">watermelon</label>
+			<br />
+			选中个数：{{checkedNames.length}}
+			<p>选择的值为：{{checkedNames}}</p>
+			<p>选中的第一个值为：{{checkedNames[0]}}</p>
+		</div>
+	</body>
+
+	<script>
+				var app = new Vue({
+					el: "#app",
+					data: {
+						checkedNames:[]
+					},
+				})
+	</script>
+
+</html>
