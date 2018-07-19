@@ -1,23 +1,26 @@
 [
-	{
-		"name": "房屋信息1",
-		"id": "1",
-		"isPrinted": "0",
-		"isChecked": "0"
-	}, {
-		"name": "房屋信息2",
-		"id": "2",
-		"isPrinted": "1",
-		"isChecked": "0"
-	}, {
-		"name": "房屋信息3",
-		"id": "3",
-		"isPrinted": "0",
-		"isChecked": "1"
-	}, {
-		"name": "房屋信息4",
-		"id": "4",
-		"isPrinted": "0",
-		"isChecked": "0"
-	}
+  {
+    "name": "房屋信息1",
+    "id": "1",
+    "isPrinted": "0",
+    "isChecked": "0"
+  },
+  {
+    "name": "房屋信息2",
+    "id": "2",
+    "isPrinted": "1",
+    "isChecked": "0"
+  },
+  {
+    "name": "房屋信息3",
+    "id": "3",
+    "isPrinted": "0",
+    "isChecked": "1"
+  },
+  {
+    "name": "房屋信息4",
+    "id": "4",
+    "isPrinted": "0",
+    "isChecked": "1"
+  }
 ]
