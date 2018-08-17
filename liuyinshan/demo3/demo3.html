@@ -5,13 +5,105 @@
     <title>demo3</title>
     <link rel="stylesheet" href="../css/demo3.css"/>
 </head>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/vue.js"></script>
 <body>
 <div id="app">
-      <deposit v-show="show"></deposit>
-      <id-read v-show="!show"></id-read>
+    <div id="index">
+        <div class="print">
+            <div @click="show_readID">
+                <img src="../img/printIcon_big.png" class="printIcon_small"/>
+                <a class="p_print">打印交存证明</a>
+            </div>
+        </div>
+        <div class="print_shadow"></div>
+        <div class="print_platform">
+            <div>
+                <img src="../img/appCode.png" style="width: 100px;margin-left: 200px;" @click="show_appCode"/>
+                <img src="../img/appCode2.png" style="width: 100px;height: 50px;margin: -3px 200px;"/>
+                <p style="color: blue;font-family: '微软雅黑';margin: -3px 200px;font-size: 20px;" @click="show_appCode">APP二维码</p>
+            </div>
+            <div class="systemCode">
+                <img src="../img/systemCode.png" style="width: 100px;" @click="show_systemCode"/>
+                <img src="../img/systemCode2.png" style="width: 100px;height: 50px;margin: -30px 0px;"/>
+                <p style="color: blue;font-family: '微软雅黑';font-size: 20px;margin: 26px -2px" @click="show_systemCode">系统二维码</p>
+            </div>
+        </div>
+    </div>
+    <div id="readID" style="display: none">
+        <div class="id_title">
+            <p class="p_print">二代身份证读取</p>
+        </div>
+        <div class="id_read">
+            <img id="lunbo" src="../img/IDRead_01.png" class="IDRead_01"/>
+        </div>
+        <div class="id_appCode">
+            <div>
+                <img src="../img/appCode.png" style="width: 100px;margin-left: 200px;"/>
+                <img src="../img/appCode2.png" style="width: 100px;height: 50px;margin: -3px 200px;"/>
+                <p style="color: blue;font-family: '微软雅黑';margin: -3px 200px;font-size: 20px;">APP二维码</p>
+            </div>
+            <div class="systemCode">
+                <img src="../img/systemCode.png" style="width: 100px;"/>
+                <img src="../img/systemCode2.png" style="width: 100px;height: 50px;margin: -30px 0px;"/>
+                <p style="color: blue;font-family: '微软雅黑';font-size: 20px;margin: 26px -2px">系统二维码</p>
+            </div>
+        </div>
+        <div class="id_photograph">
+            <img src="../img/photograph.png" id="touxiang"/>
+        </div>
+    </div>
+    <div id="tdPrint"  style="display: none">
+        <div class="td_total">
+            <table>
+                <tr>
+                    <td colspan="2" class="td_title">
+                        <p class="p_readID">选择要打印的房屋</p>
+                    </td>
+                </tr>
+                <tr v-for="(item,index) in items">
+                    <td v-if="item.isPrinted == 1" class="td_isChecked">
+                        <img src="../img/disabled.png" width="70px"/>
+                    </td>
+                    <td v-else class="td_isChecked">
+                        <img :id="item.id" :src="item.isChecked==1?'../img/checked.png':'../img/unchecked.png'" width="70px"
+                             v-on:click="checkPrint(item.isChecked,item.id,index)"/>
+                    </td>
+                    <td>
+                        <p class="p_td">{{item.name}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p class="p_tdTotal">总房屋数：
+                            <font color="blue">{{count}}个</font>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <div class="td_printButton" @click="jishi">
+                <img src="../img/printIcon_small.png"/>
+                <p class="p_tdPrint">打印</p>
+            </div>
+            <div class="td_photo">
+                <img src="../img/photo.png" style="width: 200px;margin: 100px 100px;position: absolute;"/>
+            </div>
+            <div id="print" class="white_content">
+                <img src="../img/print.gif"/>
+                <p class="p_printNow">正在打印：<font color="blue">第{{temp}}张</font></p>
+            </div>
+        </div>
+        <div id="fade" class="black_overlay"></div>
+    </div>
+    <div id="appCode" class="code" @click="reload">
+
+    </div>
+    <div id="systemCode" class="code" @click="reload">
+
+    </div>
+    <div id="fade1" class="black_overlay" @click="reload"></div>
 </div>
 </body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/vue.js"></script>
+<script src="../js/jquery.qrcode.min.js"></script>
 <script src="../js/demo3.js"></script>
 </html>

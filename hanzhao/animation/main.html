@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link type="text/css" href="css/main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.timers-1.2.js" type="text/javascript"></script>
+</head>
+<style>
+</style>
+<body>
+<div class="container" id="container">
+    <div class="print" v-on:click="show = !show" id="print" v-if="show" >
+        <img src="img/printIcon.png" class="print-icon">
+        <span class="print-msg">打印交存证明</span>
+    </div>
+    <img src="img/printShadow.png" class="print-shadow" v-if="show">
+
+    <transition name="check1">
+        <div class="checkid" v-if="!show">
+            <div class="check-title">二代身份证读取</div>
+                <div v-if="!show" class="id-card"><img src="img/idCard2.png"></div>
+        </div>
+    </transition>
+
+    <transition name="check2">
+        <div class="checkid" v-if="!show">
+            <div class="check-title">二代身份证读取</div>
+                <div v-if="!show" class="id-card"><img src="img/idCard1.png"></div>
+        </div>
+    </transition>
+
+        <img src="img/photo.png" class="photo" v-if="!show">
+    <transition name="head">
+        <img src="img/head.png" id="head" v-if="!show" style="z-index:1">
+    </transition>
+
+    <transition name="homesMsg">
+        <div id="app" v-if="!show">
+            <div id="title">选择要打印的房屋</div>
+            <ul>
+                <li v-for="item in items">
+                    <img v-if="item.isChecked==1?true:false" src="img/Checked.png"  v-if=""v-on:click="checkBox($event,item.isPrinted)">
+                    <img v-else src="img/noChecked.png"  v-on:click="checkBox($event,item.isPrinted)">
+                    <input :id="item.id" type="checkbox"  v-bind:disabled="item.isPrinted==1?true:false" style="display: none">
+                    <span class="homeName">{{item.name}}</span>
+                </li>
+            </ul>
+            <div class="printHome">共有<span id="sumHomes">0</span>家房屋</div>
+            <div class="print-icon2" @click="printHome"><img src="img/Smallicon.png"></div>
+        </div>
+    </transition>
+
+    <div id="procedure">
+    </div>
+
+    <div id="printPro">
+        <img src="img/print.gif">
+        <span class="printNum">正在打印第<a id="number">1</a>张</span>
+    </div>
+
+
+    <div class="desk">
+        <img src="img/app.png" class="app">
+        <img src="img/system.png" class="system">
+        <img src="img/appShadow.png" class="app-shadow">
+        <img src="img/systemShadow.png" class="system-shadow">
+        <span class="app-title">APP 二维码</span>
+        <span class="system-title">系统 二维码</span>
+    </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+</html>

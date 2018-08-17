@@ -1,0 +1,135 @@
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-attr="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>打印房屋列表</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/iscroll-probe.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<style>
+    li{
+        width:800px;
+        height: 50px;
+        list-style: none;
+        margin-top: 30px;
+        position: relative;
+    }
+    .homeName{
+        width: 600px;
+        height: 30px;
+        border-radius: 5px;
+        display: inline-block;
+        background: #CFE9FF;
+        position: absolute;
+        right: 50px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    #app{
+        width: 800px;
+        height: 500px;
+        margin: 0 auto;
+    }
+    #title{
+        width: 800px;
+        height: 50px;
+        background:#42A7FF ;
+        font-size:20px;
+        color: white;
+        text-align: center;
+        line-height: 50px;
+    }
+    img{
+        width: 30px;
+        height: 30px;
+        margin-left: 50px;
+    }
+    .printHome{
+        width: 300px;
+        height: 30px;
+        background-color: #CFE9FF;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0 auto;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+</style>
+<body>
+<div id="app">
+    <div id="title">选择要打印的房屋</div>
+    <ul>
+        <li v-for="item in items">
+            <img v-if="item.isChecked==1?true:false" src="image/Checked.png"  v-if=""v-on:click="checkBox($event,item.isPrinted)">
+            <img v-else src="image/noChecked.png"  v-on:click="checkBox($event,item.isPrinted)">
+            <input :id="item.id" type="checkbox"  v-bind:disabled="item.isPrinted==1?true:false" style="display: none">
+            <span class="homeName">{{item.name}}</span>
+        </li>
+    </ul>
+    <div class="printHome" @click="printHome">共有<span id="sumHomes">0</span>家房屋 </div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",//请求方式
+            url: "demo.json",//地址，就是json文件的请求路径
+            dataType: "json",
+            async:false,
+            success: function(result){
+                pushDom(result);
+            }
+        });
+    });
+    function pushDom(result){
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                items:result,
+                sumHomes:0
+            },
+            methods:{
+                checkBox:function (e,isPrinted) {
+                    if(isPrinted==0){
+                        var x=e.target.nextElementSibling;
+                        var img=e.target;
+                        if(x.checked==true){
+                            $('#sumHomes').html(parseInt($('#sumHomes').html())-1);
+                            x.checked=false;
+                            img.src="image/noChecked.png"
+                        }else{
+                            $('#sumHomes').html(parseInt($('#sumHomes').html())+1);
+                            x.checked=true;
+                            img.src="image/Checked.png"
+                        }
+                    }else{
+                        alert("这个房屋信息已经被打印过啦");
+                    }
+                },
+                printHome(){
+                    var map={};
+                    var JsonString='[';
+                    $("input:checkbox").each(function() {
+                        map['id']=this.id;
+                        map['name']=$(this).next().html()+'';
+                        map['isChecked']=this.checked==true?1:0+'';
+                        map['isPrinted']=this.checked==true || this.disabled==true?1:0+'';
+                        JsonString+=JSON.stringify(map)+',';
+                    });
+                    JsonString=JsonString.substring(0,JsonString.length-1);
+                    var data =eval('('+JsonString+']'+')');
+                    console.log(data);
+                    alert("打印成功");
+                }
+            }
+        });
+    }
+</script>
+</html>

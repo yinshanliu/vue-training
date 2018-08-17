@@ -1,0 +1,332 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    background-repeat:no-repeat;
+    background: url("../img/bg.gif");
+    background-size: cover;
+    position: relative;
+    width: 1920px;
+    height: 650px;
+}
+.print{
+    width: 400px;
+    height: 200px;
+    margin: 200px auto;
+    border-radius:20px;
+    background: url("../img/bgprint.png");
+    background-size: 400px 200px;
+}
+.print-icon{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 150px;
+    top: 20px;
+}
+.print-msg{
+    font-size: 30px;
+    color: white;
+    position: relative;
+    top: 60px;
+}
+.desk{
+    width:1116px;
+    height: 160px;
+    background: url("../img/desk.png");
+    position: fixed;
+    bottom: 10px;
+    left: 402px;
+}
+.app{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 350px;
+    bottom: 20px;
+}
+.system{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 550px;
+    bottom: 20px;
+}
+.app-shadow{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 140px;
+    bottom: -80px;
+}
+.system-shadow{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    left: 340px;
+    bottom: -80px;
+}
+.app-title{
+    font-size: 24px;
+    color: #3782C9;
+    position: relative;
+    left: -80px;
+    top: 20px;
+}
+.system-title{
+    font-size: 24px;
+    color: #3782C9;
+    position: relative;
+    top: 20px;
+    left: 100px;
+}
+.photo{
+    width: 250px;
+    height: 250px;
+    position: fixed;
+    top: 50px;
+    right: 250px;
+}
+#head{
+    width: 160px;
+    height: 160px;
+    position: fixed;
+    top: 95px;
+    right: 293px;
+}
+.id-card{
+    width: 400px;
+    height: 266px;
+    position: fixed;
+    top: 250px;
+    left: 710px;
+}
+.id-card2{
+    width: 400px;
+    height: 266px;
+    position: fixed;
+    top: 250px;
+    left: 710px;
+}
+.id-card img{
+    width: 400px;
+    height: 266px;
+}
+.id-card2 img{
+    width: 400px;
+    height: 266px;
+}
+.checkid{
+    width: 500px;
+    height: 400px;
+    position: fixed;
+    top: 150px;
+    left: 660px;
+    background-color: white;
+    opacity: 0;
+}
+.check-title{
+    width: 500px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+    font-size: 24px;
+    background: #42A7FF;
+}
+
+.print-shadow{
+    width: 400px;
+    height: 200px;
+    position: fixed;
+    left: 760px;
+    bottom: 347px;
+}
+
+.check1-enter-active {
+     animation: check1-in 3s;
+ }
+
+@keyframes check1-in {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 255;
+    }
+    40% {
+          opacity: 0;
+      }
+    60% {
+        opacity: 255;
+    }
+    80% {
+          opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.check2-enter-active {
+    animation: check2-in 3s;
+}
+
+@keyframes check2-in {
+    0% {
+        opacity: 255;
+    }
+    20% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 255;
+    }
+    60% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 255;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+li{
+    width:800px;
+    height: 50px;
+    list-style: none;
+    margin-top: 30px;
+    position: relative;
+}
+.homeName{
+    width: 600px;
+    height: 30px;
+    border-radius: 5px;
+    display: inline-block;
+    background: #CFE9FF;
+    position: absolute;
+    right: 50px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#app{
+    width: 800px;
+    height: 500px;
+    margin: 200px auto;
+
+}
+.print-icon2{
+    width: 197px;
+    height: 101px;
+    background: url("../img/smallprinticon.png");
+    background-size:197px 101px;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 500px;
+    right: 350px;
+}
+.print-icon2 img {
+    width: 109px;
+    height: 109px;
+    position: relative;
+    left:44px;
+}
+#title{
+    width: 800px;
+    height: 50px;
+    background:#42A7FF ;
+    font-size:20px;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+}
+li img{
+    width: 30px;
+    height: 30px;
+    margin-left: 50px;
+}
+.printHome{
+    width: 300px;
+    height: 30px;
+    background-color: #CFE9FF;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+}
+.homesMsg-enter-active {
+    animation: homesMsg-in 4s;
+}
+@keyframes homesMsg-in {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    60% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 255;
+    }
+}
+
+.head-enter-active {
+    animation: head-in 3s;
+}
+@keyframes head-in {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 255;
+    }
+    60% {
+        opacity: 255;
+    }
+    80% {
+        opacity: 255;
+    }
+    100% {
+        opacity: 255;
+    }
+}
+#procedure{
+    width: 100%;
+    height:946px;
+    position: absolute;
+    top: -200px;
+    background-color: #0f0f0f;
+    opacity: 0.5;
+    z-index: 1;
+}
+#printPro{
+    position: absolute;
+    z-index: 255;
+    top: -40px;
+    left: 710px;
+}
+.printNum{
+    color: white;
+    font-size: 30px;
+    display: inline-block;
+    position: absolute;
+    z-index: 255;
+    left: 150px;
+    margin-top: 30px;
+
+}

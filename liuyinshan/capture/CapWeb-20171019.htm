@@ -1,0 +1,276 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title> 南天拍摄仪拍照网页 </title>
+</head>
+<body onload = "JsRefreshDevList();JsSelDevName();JsRefreshResolution();JsSelResolution();jsStartPreviewProc()">
+<div>
+    <div id="real">
+        <object classid="clsid:1C68DF21-EFEC-4623-85E5-0C369B95F15E" style="width:27%;height:50%;position: absolute;top:3%;left:20%" hspace="3" vspace="3" id="testocx" codebase="SealCapNtWeb.cab#version=1,7,0,0">
+            <img src="nantian.JPG" hspace="3" vspace="3" />
+        </object>
+    </div>
+    <div id="preview" style="width:27%;height:50%;position: absolute;top:3%;left:20%;display: none">
+        <img id="big" width="100%" height="100%" />
+    </div>
+</div>
+<div style="display: none">
+    <select name="SelectBox" size="1" id="s1" onChange="JsSelDevName()" >
+    </select>
+    <select name="SelectResolutionBox" size="1" id="s2" onChange="JsSelResolution()">
+    </select>
+    <select name="SelectFormatBox" size="1" id="s4" onChange="JsSelFormat()">
+        <option value="jpg" selected="selected">jpg</option>
+    </select>
+    <br>
+</div>
+<div>
+<input  name="SealCapBox" type="button" onClick="SealCapWeb()" value=" 拍摄 " style="position: absolute;top:0%;left:41%">
+<input type="button" value=" 删除 " onClick="deleteImg()" style="position: absolute;top:0%;left:44%">
+</div>
+<div>
+    <h3 style="position: absolute;top: 1%;left: 20%;">图像预览</h3><br>
+    <div style="width:50%;height:30%;position: absolute;top: 50%;left: 0%;">
+        <h3 style="position: absolute;top: 25%;left: 0%;">缩略图</h3><br>
+        <div id="graph" style="width:100%;height:80%;position: absolute;top: 35%;left: 0%;">
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+<script language="JavaScript">
+    <!--
+    //数组用来存取图片的base64值
+    var array = new Array();
+    //定义图片状态
+    var imgState = -1;
+    //定义视频打开状态，1：视频打开，0：图片预览
+    var videoState = 1;
+    //打开视频预览
+    function jsStartPreviewProc() {
+        testocx.StopPreview();
+        ret=testocx.StartPreviewProc();
+    }
+    //拍照
+    function SealCapWeb() {
+        //图片保存路径,默认C:\Users\admin\AppData\Local\Temp
+        // testocx.customSavePath = "F:\\TEMP";
+        var format  = 'jpg';
+        var DPI  = 0;
+        testocx.pDPI=DPI;
+        testocx.nColorSpace=0;
+        testocx.nRotateAngle=0;
+        ret=testocx.SealCap(format);
+        var inum = testocx.RefreshImgList(format);
+        var cstr="";
+        for (var i=0; i<inum; i++)
+        {
+            cstr = testocx.GetImgNameByIdx(i);
+            if (cstr!="")
+            {
+                var opt = document.createElement("OPTION");
+                opt.innerText = cstr;
+                opt.value = i;
+            }
+        }
+
+        testocx.markdown = true;
+        ret = testocx.GetBase64String(testocx.cPicName);
+        if (ret==true)
+        {
+            //result 获取该照片的base64值
+            var result=testocx.Img2Base64;
+        }
+
+        //向数组中添加该照片的base64值
+        if(array.length>=5){
+            alert("图片存取数量已满")
+        }else {
+            $("#graph").append("<img id="+array.length+" style='width: 19%;height: 80%;' onclick='imgClick("+array.length+")'/>");
+            document.getElementById(""+array.length).src = "data:image/jpg;base64," + result;
+            // 向数组中加入该照片的base64值
+            array.push(result)
+        }
+    }
+
+    function JsRefreshDevList() {
+        testocx.WriteLog = true;
+        var sel = document.getElementById('s1');
+        var inum = testocx.RefreshDevList();
+        var i=0;
+        var cstr="";
+        //for (i=inum-1; i>=0; i--)
+        for (i=0; i<inum; i++)
+        {
+            cstr = testocx.GetDevNameByIdx(i);
+            if (cstr!="")
+            {
+                var opt = document.createElement("OPTION");
+                sel.options.add(opt);
+                opt.innerText = cstr;
+                opt.value = i;
+                if (cstr == "主摄像头(2M)")
+                {
+                    opt.selected = true;
+                    testocx.SetDevNameSel(i);
+                }
+                if(cstr == "主摄像头")
+                {
+                    opt.selected = true;
+                    testocx.SetDevNameSel(i);
+                }
+            }
+        }
+    }
+
+    function JsSelDevName() {
+        try
+        {
+            var ret=0;
+            var i;
+            testocx.StopPreview();
+            i  = document.getElementById('s1').value;
+            ret= testocx.SetDevNameSel(i);
+            var sel = document.getElementById('s2');
+            for(var x=sel.length-1;x>=0;x--)
+            {
+                sel.options[x].removeNode(true);
+            }
+            JsRefreshResolution();
+        }
+        catch(e)
+        {
+            window.alert(e);	//"加载DLL错误！");
+        }
+    }
+
+    function JsSelResolution() {
+        try
+        {
+            var ret=0;
+            var i;
+            testocx.StopPreview();
+            i  = document.getElementById('s2').value;
+            ret= testocx.SetResolution(i);
+        }
+        catch(e)
+        {
+            window.alert(e);	//"加载DLL错误！");
+        }
+    }
+
+    function JsRefreshResolution(){
+        var sel = document.getElementById('s2');
+        var i  = document.getElementById('s1').value;
+        var inum = testocx.RefreshResolution(i);
+        var cstr="";
+        for (i=0; i<inum; i++)
+        {
+            cstr = testocx.GetResolutionByIdx(i);
+            if (cstr!="")
+            {
+                var opt = document.createElement("OPTION");
+                sel.options.add(opt);
+                opt.innerText = cstr;
+                opt.value = i;
+            }
+        }
+    }
+
+    function jsDeleteImg(){
+        if (ImgIdx >= 0)
+            ret= testocx.DeleteImg(ImgIdx);
+        var sel = document.getElementById('s3');
+        for(var x=sel.length-1;x>=0;x--)
+        {
+            sel.options[x].removeNode(true);
+        }
+        var format  = document.getElementById('s4').value;
+        var inum = testocx.RefreshImgList(format);
+        var cstr="";
+        for (i=0; i<inum; i++)
+        {
+            cstr = testocx.GetImgNameByIdx(i);
+            if (cstr!="")
+            {
+                var opt = document.createElement("OPTION");
+                sel.options.add(opt);
+                opt.innerText = cstr;
+                opt.value = i;
+            }
+        }
+    }
+
+    function JsSelFormat(){
+        var sel = document.getElementById('s3');
+        for(var x=sel.length-1;x>=0;x--)
+        {
+            sel.options[x].removeNode(true);
+        }
+        var format  = document.getElementById('s4').value;
+        var inum = testocx.RefreshImgList("format");
+        var cstr="";
+        for (i=0; i<inum; i++)
+        {
+            cstr = testocx.GetImgNameByIdx(i);
+            if (cstr!="")
+            {
+                var opt = document.createElement("OPTION");
+                sel.options.add(opt);
+                opt.innerText = cstr;
+                opt.value = i;
+            }
+        }
+    }
+    //打开视频
+    function openVideo() {
+        $("#real").show();
+        $("#preview").hide();
+        //视频状态为打开
+        videoState = 1;
+    }
+    //图片点击事件
+    function imgClick(imgId){
+        if(imgState==imgId){
+            //打开视频,取消图片预览，实现实时拍照
+            $("#real").show();
+            $("#preview").hide();
+            //如果imgState为该图片id，则取消选中
+            imgState=-1;
+            //视频状态为打开
+            videoState = 1;
+        }else{
+            //关闭视频
+            $("#real").hide();
+            $("#preview").show();
+            //选中图片预览在图片预览框中
+            var element = document.getElementById('big');
+            element.src = "data:image/jpg;base64," + array[imgId];
+            //选中该图片，并把该图片id传给imgState
+            imgState=imgId;
+            //视频状态为预览
+            videoState = 0;
+            //3秒后打开视频
+            setTimeout("openVideo()",3000);
+        }
+    }
+    //删除按钮删除当前选择图片
+    function deleteImg() {
+        //只有预览状态才会删除图片
+        if(videoState == 0){
+            if(imgState!=-1){
+                //打开视频,取消图片预览，实现实时拍照
+                $("#real").show();
+                $("#preview").hide();
+                //将删除的图片隐藏删除
+                $("#"+imgState).css("display","none")
+                //从数组中去除该图片
+                array.splice(imgState, 1);
+            }
+        }else{
+            alert("当前为拍摄状态，没有预览的图片需要删除")
+        }
+    }
+    //-->
+</script>
+</html>

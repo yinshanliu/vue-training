@@ -9,42 +9,42 @@
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/vue.js"></script>
 	<body>
-		<div class="td1" id="app">
+		<div class="td_total" id="app">
 			<table>
 				<tr>
-					<td colspan="2" class="td_1">
-						<p class="p_2">选择要打印的房屋</p>
+					<td colspan="2" class="td_title">
+						<p class="p_readID">选择要打印的房屋</p>
 					</td>
 				</tr>
 				<tr v-for="(item,index) in items">
-					<td v-if="item.isPrinted == 1" class="td_2">
+					<td v-if="item.isPrinted == 1" class="td_isChecked">
 						<img src="../img/disabled.png" width="70px" />
 					</td>
-					<td v-else class="td_2">
+					<td v-else class="td_isChecked">
 						<img :id="item.id" :src="item.isChecked==1?'../img/checked.png':'../img/unchecked.png'" width="70px" v-on:click="checkPrint(item.isChecked,item.id,index)"/>
 					</td>
 					<td>
-						<p class="p_3">{{item.name}}</p>
+						<p class="p_td">{{item.name}}</p>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<p class="p_4">总房屋数：
+						<p class="p_tdTotal">总房屋数：
 							<font color="blue">{{count}}个</font>
 						</p>
 					</td>
 				</tr>
 			</table>
-			<div class="td3"  @click="jishi">
+			<div class="td_printButton"  @click="jishi">
 				<img src="../img/printIcon_small.png" />
-				<p class="p_5">打印</p>
+				<p class="p_tdPrint">打印</p>
 			</div>
-			<div class="td2">
-				<img src="../img/touxiang.png" style="width: 200px;margin: 100px 100px;" />
+			<div class="td_photo">
+				<img src="../img/photo.png" style="width: 200px;margin: 100px 100px;" />
 			</div>
 			<div id="print" class="white_content">
 				<img src="../img/print.gif" />
-				<p class="p_6">正在打印：<font color="blue">第{{temp}}张</font></p>
+				<p class="p_printNow">正在打印：<font color="blue">第{{temp}}张</font></p>
 			</div>
 			<div id="fade" class="black_overlay"></div>
 		</div>

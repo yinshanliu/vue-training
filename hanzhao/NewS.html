@@ -1,0 +1,115 @@
+
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>百思为科新闻板块</title>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/iscroll-probe.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+<style>
+   #titles{
+        width: 500px;
+        height: 50px;
+        font-size: 27px;
+        font-weight: bold;
+        text-align: center;
+        margin:0 auto;
+    }
+    img{
+        width: 15px;
+        height: 15px;
+    }
+     .message{
+         width: 150px;
+         height: 20px;
+         display: inline-block;
+         float: left;
+         margin-left: 20px;
+         margin-top: 10px;
+     }
+    .publishMsg{
+        width: 600px;
+        height: 20px;
+        margin: 0 720px;
+    }
+    #content{
+        width: 900px;
+        height: 800px;
+        margin: 0 auto;
+    }
+    p{
+        text-indent:2em;
+        margin-top: 30px;
+    }
+    .data{
+        margin-left: 10px;
+    }
+    .img{
+        margin-bottom: 2px;
+    }
+
+</style>
+<body>
+<div id="components-demo">
+       <news-title id="titles"></news-title>
+       <publish-msg id="message"></publish-msg>
+    <hr style="width: 1000px;margin-top: 50px">
+       <news-content></news-content>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",//请求方式
+            url: "news.json",//地址，就是json文件的请求路径
+            dataType: "json",
+            async:false,
+            success: function(result){
+                dispose(result);
+            }
+        });
+    })
+    function  dispose(data){
+        Vue.component(
+                'news-title',{
+                    template:'<div>{{title}}</div>',
+                    data:function () {
+                        return {
+                            title:data[0].title
+                        }
+                    }
+                });
+        Vue.component(
+                'publish-msg',{
+                    template:'<div class="publishMsg">' +
+                    '<div class="message"><img class="img" src="image/calender1.gif"><span class="data">时间：{{time}}</span></div>' +
+                    '<div class="message"><img class="img" src="image/author.gif"><span class="data">发布人：{{author}}</span></div>' +
+                    '<div class="message"><img class="img" src="image/eye.gif"><span class="data">浏览数：{{viewCounts}}</span></div></div>',
+                    data:function(){
+                        return {
+                            time:data[0].time,
+                            author:data[0].author,
+                            viewCounts:data[0].viewCounts
+                        }
+                    }
+                })
+        Vue.component('news-content',{
+            template:'<div v-html="content"></div>',
+            data:function () {
+                return{
+                    content:data[0].content
+                }
+            }
+        })
+        new Vue({
+            el: '#components-demo'
+        })
+    }
+
+</script>
+
+
+</html>
