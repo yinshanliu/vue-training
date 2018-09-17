@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="../js/vue.js"></script>
+	<script src="../js/jquery.min.js"></script>
+
+	<body style="text-align: center;">
+		<div id="app">
+			<p>选择要打印的房屋</p>
+			<form id="form1">
+				<div v-for="data in myData">
+					<input id="data.id" type="checkbox" v-model="data.isChecked==1?true:false" v-bind:disabled="data.isPrinted==1?true:false"/>
+					{{data.name}}
+				</div>
+				<p>总房屋数：{{myData.length}}个</p>
+			</form>
+			<p id="p1"></p>
+		</div>
+	</body>
+	<script>
+			$.ajax({
+				type:"get",
+				url:"../data/data.json",
+				async:true,
+				success:function(data){
+					var app = new Vue({
+						el:"#app",
+						data:{
+							myData:data,
+						}
+					});
+				}
+			});
+	</script>
+
+</html>

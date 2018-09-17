@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="./js/qwebchannel.js"></script>
+        <script type="text/javascript">
+            //BEGIN SETUP
+			var photographData = "";
+			var baseUrl;
+			var socket;
+			function disconnect()
+			{
+				dialog.get_actionType("closeSignal");
+				socket.close();
+				socket = null;
+			}
+			function openSocket() {
+				socket = new WebSocket(baseUrl);
+                socket.onclose = function()
+                {
+                    console.error("web channel closed");
+                };
+                socket.onerror = function(error)
+                {
+                    console.error("web channel error: " + error);
+                };
+				socket.onopen = function()
+                {
+                    new QWebChannel(socket, function(channel) {
+                        //获取c++注册对象
+                        window.dialog = channel.objects.dialog;
+						
+						//网页关闭函数
+						window.onunload = function() {
+							dialog.get_actionType("closeSignal");
+						}
+						//网页控件事件，设备列表点击
+						//打开视频按钮点击(判断打开一个，还是多个视频窗口，需要两种html文件一种就是现在这样的切换设备)
+						//关闭视频按钮点击
+						document.getElementById("closeVideo").onclick = function() {
+							dialog.get_actionType("closeVideo");
+							var img = document.getElementById('big');				
+							img.src = "";
+						};
+						//拍照按钮点击
+						document.getElementById("photograph").onclick = function() {
+							dialog.photoBtnClicked("single");
+							dialog.get_actionType("savePhoto");
+						};
+						//输出按钮点击
+						document.getElementById("printBase64").onclick = function() {
+							alert(photographData);
+						};
+						//接收图片流用来展示，多个，较小的base64
+						dialog.send_imgData2.connect(function(message) {
+							changeImgdata(message);	
+                        });
+						//接收图片流用来展示，单个，较大的base64
+						dialog.send_imaData3.connect(function(message) {
+							changeImgdata_paizhao(message);	
+							photographData = message;						
+                        });
+						//网页加载完成信号
+						dialog.html_loaded("one");
+                        dialog.devChanged("BV709A3R");
+                        dialog.get_actionType("openVideo");
+                    });
+                }
+			}
+			//拍照时用来展示的img
+			function changeImgdata_paizhao(message)
+			{
+				var element = document.getElementById('paizhao');
+				element.src = "data:image/jpg;base64," + message;
+			}
+			//根据文本换图片
+			function changeImgdata(message)
+			{
+				var element = document.getElementById('big');
+				element.src = "data:image/jpg;base64," + message;;
+			}
+			//网页初始化函数
+            window.onload = function() {
+				baseUrl = "ws://127.0.0.1:12345";			  
+				openSocket();
+            }
+            //END SETUP
+        </script>
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+	<tr>
+		<img id="big" width="560" height="350"  /></img>
+		<br />
+		<img id="paizhao" width="400" height="260"  /></img>
+	</tr>
+		<tr>
+			<input id="closeVideo" type="button" value="关闭视频"  />
+			<input id="photograph" type="button" value="拍照"  />
+			<input id="printBase64" type="button" value="输出Base64" />
+			<br />
+			</td>
+		</tr>
+	</body>
+</html>
