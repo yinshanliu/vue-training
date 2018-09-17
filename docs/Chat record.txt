@@ -1,0 +1,63 @@
+好滴，模块化开发（或ES6）语法，require.、gulp,  grunt, webpack 这些怎么样?
+
+好滴，（或ES6）语法，require.、gulp,  grunt, webpack 这些就先不管了，开发环境都是用的那个（idea？）
+
+谁对前端的布局比较熟悉？比如CSS样式 float、postion 、flex、grid、响应式、布局之类的
+弹性布局没怎么用过 其余的还好。
+https://blog.csdn.net/qq_27093465/article/details/52222634 
+<!-- --> 是显式注释 
+<%-- --%>是隐式注释
+
+*********************2018-07-06********************************* 
+Vue官方文档：
+https://cn.vuejs.org/v2/guide/installation.html#%E7%9B%B4%E6%8E%A5%E7%94%A8-lt-script-gt-%E5%BC%95%E5%85%A5 
+
+
+API文档：https://cn.vuejs.org/v2/api/ 
+
+
+安装：目前采用（或require.js: 不了解的，可以大体先了解下）；
+先把“基础”部分花一天左右的时间看完；；其他部分再说；
+目前咱们使用的vue版本是2.+版本，vue1版本无需关注；
+
+看完之后，实现个demo（采用vue实现），效果图如下：
+
+功能要求：
+动态生成列表（暂无需分页）；
+逐个勾选及状态的保存（如数组里面）；
+数据来源格式暂定为（网络请求采用jquery：ajax请求，假数据模拟即可）：
+
+“[{name:'房屋信息1',id:'1',isPrinted:'0',isChecked:'0'},{name:'房屋信息2',id:'2',isPrinted:'1',isChecked:'0'},{name:'房屋信息3',id:'3',isPrinted:'0',isChecked:'0'},{name:'房屋信息4',id:'4',isPrinted:'0',isChecked:'0'}]”
+
+
+字段含义：
+
+name：名称；
+
+id：唯一标识；
+
+isPrinted：是否已经打印，已经打印为1，未打印未0；  如果为已经打印：勾选框为默认不勾选，且为禁用状态（变灰）；
+
+isChecked: 表示是否勾选，默认为未勾选：0  ，勾选为：1；
+
+
+
+
+demo 代码放在git仓库上， 如果对git使用不了解的；可以看看下面网址：https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000 
+
+
+重点看看：“”；要求在自己的分支下开发； 自己分支的名字为：姓名的全拼（拼音）
+
+
+git工具可以用idea里面集成git插件、sourceTree或自己熟悉的git工具；
+
+http://172.10.11.29:8899/users/sign_in   git注册地址， 用公司邮箱 上去注册一下 
+
+为了方便大家快速学习，之前写了个快速运行demo，目前还没有集成vue相关；
+用到了gulp.js,node.js （无需关注）；
+详情参考文档“demo运行说明.pdf”;
+
+代码仓库地址：http://172.10.11.29:8899/bv-training/vue-training 
+
+
+
