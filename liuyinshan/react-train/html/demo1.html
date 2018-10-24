@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1</title>
+    <script src="https://cdn.bootcss.com/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<div id="localDate"></div>
+</body>
+<script type="text/babel">
+    ReactDOM.render(
+        <h1>Hello World</h1>,
+        document.getElementById('example')
+    )
+    function tick() {
+        const element = (
+            <div>
+                <h2>北京时间:{new Date().toLocaleTimeString()}</h2>
+            </div>
+        );
+        ReactDOM.render(
+            element,
+            document.getElementById('localDate')
+        )
+    }
+    setInterval(tick,1000)
+</script>
+</html>

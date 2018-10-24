@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>数据表格</title>
+		<link rel="stylesheet" href="../css/demo3.css" />
+	</head>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/vue.js"></script>
+	<body>
+		<div class="td_total" id="app">
+			<table>
+				<tr>
+					<td colspan="2" class="td_title">
+						<p class="p_readID">选择要打印的房屋</p>
+					</td>
+				</tr>
+				<tr v-for="(item,index) in items">
+					<td v-if="item.isPrinted == 1" class="td_isChecked">
+						<img src="../img/disabled.png" width="70px" />
+					</td>
+					<td v-else class="td_isChecked">
+						<img :id="item.id" :src="item.isChecked==1?'../img/checked.png':'../img/unchecked.png'" width="70px" v-on:click="checkPrint(item.isChecked,item.id,index)"/>
+					</td>
+					<td>
+						<p class="p_td">{{item.name}}</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<p class="p_tdTotal">总房屋数：
+							<font color="blue">{{count}}个</font>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<div class="td_printButton"  @click="jishi">
+				<img src="../img/printIcon_small.png" />
+				<p class="p_tdPrint">打印</p>
+			</div>
+			<div class="td_photo">
+				<img src="../img/photo.png" style="width: 200px;margin: 100px 100px;" />
+			</div>
+			<div id="print" class="white_content">
+				<img src="../img/print.gif" />
+				<p class="p_printNow">正在打印：<font color="blue">第{{temp}}张</font></p>
+			</div>
+			<div id="fade" class="black_overlay"></div>
+		</div>
+	</body>
+	<script>
+		$.ajax({
+			type:"get",
+			url:"../data/data.json",
+			success:function (data) {
+			    var count = 0;
+			    var temp = 1;
+			    $(data).each(function (i,n) {
+					if(n.isPrinted==0&&n.isChecked==1){
+					    count++;
+					}
+                })
+				// debugger;
+                var app = new Vue({
+                    el:"#app",
+					data:{
+                        items:data,
+						count:count,
+						temp:temp
+					},
+					methods:{
+                        checkPrint:function (isChecked,id,index) {
+                            // debugger;
+							if(isChecked==1){
+							    // alert(1);
+								this.items[index].isChecked=0;
+							    this.count--;
+                                count--;
+							    $("#"+id).prop("src","../img/unchecked.png")
+							}else{
+                                // alert(0);
+                                this.items[index].isChecked=1;
+                                this.count++;
+                                count++;
+                                $("#"+id).prop("src","../img/checked.png")
+							}
+                        },
+                        jishi:function () {
+                            if(count==0){
+                                alert("当前没有信息需要打印");
+                                location.reload();
+                                return
+							}
+                                document.getElementById('print').style.display='block';
+                                document.getElementById('fade').style.display='block';
+                                var jishi = setInterval(function () {
+                                    if(count==app.temp){
+                                        alert("打印完成");
+                                        document.getElementById('print').style.display='none';
+                                        document.getElementById('fade').style.display='none';
+                                        location.reload();//刷新页面
+                                        clearInterval(jishi);
+                                    }else{
+                                        app.temp++
+                                    }
+                                },2500)
+                        }
+					}
+                })
+            }
+		})
+	</script>
+</html>

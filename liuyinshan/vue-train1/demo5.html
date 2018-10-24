@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue component train</title>
+</head>
+<body>
+    <div style="display: none">
+        <div class="mycomponent">
+            <div v-for="item in items" style="display: inline-block">
+                <span v-text="item.name"></span>
+                <span v-text="item.age" v-show="showAge"></span>
+            </div>
+            <button @click="sub">提交</button><hr>
+            <div id="computed">
+                <div>
+                    输入：<input v-model="message"><br>
+                    反转：{{reversedMessage}}
+                </div>
+                <div>
+                    姓: <input v-model="firstName"><br>
+                    名：<input v-model="lastName"><br>
+                    姓名：{{fullName}}
+                </div>
+            </div><hr>
+            <div id="watch">
+                <div>
+                    <label>用户名:</label>
+                    <input v-model="info.name" placeholder="请输入用户名" />
+                </div>
+                <div>
+                    <label>密码:</label>
+                    <input v-model="info.passw" placeholder="请输入密码" />
+                </div>
+                <div>
+                    <label>二次密码:</label>
+                    <input v-model="passw2" placeholder="请再次输入密码" />
+                </div>
+            </div><hr>
+            <div id="class">
+                <p v-text="activeMessage" :class="[fontSize,errorActive]"></p>
+                <p v-text="activeMessage" :class="{successActive : active}"></p>
+                <p v-text="activeMessage" :class="[active ? successActive : errorActive]"></p>
+                <button @click="switchActive">切换</button>
+            </div><hr>
+            <div id="slot">
+                <slot name="header"></slot>
+                <slot name="footer"></slot>
+            </div>
+        </div>
+    </div>
+    <div id="app">
+        <component is="demo5-component" v-bind="config" @on-change="chandi">
+            <div slot="header">头部</div>
+            <div slot="footer">尾部</div>
+        </component>
+    </div>
+</body>
+<style>
+    .fontSize {
+        font-size: 20px;
+    }
+    .successActive {
+        color: green
+    }
+    .errorActive {
+        color: red
+    }
+</style>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/vue.js"></script>
+<script type="text/javascript">
+    Vue.component('demo5-component',{
+        //props接收父组件传来的数据
+       props: {
+            items: {
+                default: function () {
+                    return []
+                }
+            }
+       } ,
+        //組件data定義為函數
+        data: function () {
+           return {
+               person: this.items,
+               sex: '男',
+               showAge: true,
+               message: '',
+               firstName: '诸葛',
+               lastName: '孔明',
+               info: {
+                   name: '', // 用户名
+                   passw: '' // 密码
+               },
+               passw2: '',
+               active: true,
+               // activeMessage: '成功',
+               //动态绑定class样式，数组必须要定义在data中
+               fontSize: 'fontSize',
+               errorActive: 'errorActive',
+               successActive: 'successActive'
+           }
+        },
+        //计算属性
+        computed: {
+            reversedMessage: function () {
+                return this.message.split('').reverse().join('')
+            },
+            fullName: {
+                get: function () {
+                    return this.firstName+this.lastName
+                },
+                /*set: function (newValue) {
+                    var names = newValue.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[names.length - 1]
+                }*/
+            },
+            activeMessage: function () {
+                return this.active ? '成功' : '失败'
+            }
+        },
+        //侦听器
+        watch: {
+            info: {
+                // 这监听对象值的改变
+                handler(curVal,oldVal){
+                    console.log(curVal);
+                },
+                deep: true
+            },
+            passw2: function(curVal,oldVal){
+                console.log(curVal);
+            }
+        },
+        methods: {
+            sub: function () {
+                //v-show控制显示隐藏
+                this.showAge = this.showAge ? false : true;
+                //this.$emit()用于子向父组件传值
+                //自定义事件
+                this.$emit('on-change',this.sex)
+            },
+            switchActive: function () {
+                this.active = this.active ? false : true
+            }
+        },
+        //组件模板
+        template: $(".mycomponent").prop('outerHTML')
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //v-bind绑定单向数据流
+            config: {
+                items: [
+                    {
+                        name: 'amy',
+                        age: 18
+                     },{
+                        name: 'sam',
+                        age: 20
+                    }
+                ]
+            }
+        },
+        methods: {
+            //接收子组件传来的值
+            chandi: function (data) {
+                console.log(data)
+            }
+        }
+    })
+</script>
+</html>
