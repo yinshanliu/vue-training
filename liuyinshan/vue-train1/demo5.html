@@ -8,13 +8,16 @@
     <div style="display: none">
         <div class="mycomponent">
             <div v-for="item in items" style="display: inline-block">
-                <span v-text="item.name"></span>
+                <span v-if="item.age==18" v-text="item.name"></span>
                 <span v-text="item.age" v-show="showAge"></span>
             </div>
-            <button @click="sub">提交</button><hr>
-            <div id="computed">
+            <div>
+                <span v-text="phone.brand"></span>
+            </div>
+            <button v-on:click="sub">提交</button><hr>
+            <div id="computed" v-cloak>
                 <div>
-                    输入：<input v-model="message"><br>
+                    输入：<input v-model.trim="message"><br>
                     反转：{{reversedMessage}}
                 </div>
                 <div>
@@ -26,7 +29,7 @@
             <div id="watch">
                 <div>
                     <label>用户名:</label>
-                    <input v-model="info.name" placeholder="请输入用户名" />
+                    <input v-model.trim="info.name" placeholder="请输入用户名" />
                 </div>
                 <div>
                     <label>密码:</label>
@@ -57,6 +60,9 @@
     </div>
 </body>
 <style>
+    [v-cloak] {
+        display: none;
+    }
     .fontSize {
         font-size: 20px;
     }
@@ -84,6 +90,10 @@
            return {
                person: this.items,
                sex: '男',
+               phone: {
+                 brand: 'mi',
+                 price: 2100
+               },
                showAge: true,
                message: '',
                firstName: '诸葛',
@@ -137,9 +147,21 @@
             sub: function () {
                 //v-show控制显示隐藏
                 this.showAge = this.showAge ? false : true;
+               /* //将回调延迟到下次 DOM 更新循环之后执行
+                this.$nextTick(function () {
+                    console.log(this.showAge)
+                });*/
                 //this.$emit()用于子向父组件传值
                 //自定义事件
-                this.$emit('on-change',this.sex)
+                this.$emit('on-change',this.sex);
+
+               /* //根据属性更新date对象的值
+                console.log(this.phone.brand);
+                this.$set(this.phone,'brand','iphone');
+                console.log(this.phone.brand);
+                //删除对象的属性
+                this.$delete(this.phone,'brand');
+                console.log(this.phone.brand);*/
             },
             switchActive: function () {
                 this.active = this.active ? false : true
@@ -164,10 +186,15 @@
                 ]
             }
         },
+        mounted: function(){
+          /*this.$on('on-change',function (data) {
+              console.log('子组件传来的值：'+data)
+          })*/
+        },
         methods: {
             //接收子组件传来的值
             chandi: function (data) {
-                console.log(data)
+                console.log('子组件传来的值：'+data)
             }
         }
     })
